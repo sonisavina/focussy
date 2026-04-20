@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Focussy</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Chilanka&family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <body style="background: url('bkg-1.png') no-repeat center center fixed; 
+             background-size: cover;">
+        <main class="app">
+            <section class="topbar">
+                <section class="card hero">
+                    <div class="brand">
+                        <svg class="logo" viewBox="0 0 64 64" fill="none" aria-label="Focussy logo">
+                            <circle cx="32" cy="32" r="8" fill="currentColor"></circle>
+                            <ellipse cx="32" cy="32" rx="23" ry="10" stroke="currentColor" stroke-width="3"></ellipse>
+                            <ellipse cx="32" cy="32" rx="23" ry="10" stroke="currentColor" stroke-width="3"
+                                transform="rotate(-35 32 32)"></ellipse>
+                        </svg>
+                        <div class="brand-name">Focussy</div>
+                    </div>
+
+                    <h1>Focus deeper. Study smarter.</h1>
+                    <p class="subtitle">
+                        Upload your study materials, keep notes beside you, and use a retro-style
+                        timer with custom study hours and a fullscreen floating clock panel.
+                    </p>
+                    <div class="tagline">Retro focus mode with fullscreen timer</div>
+                </section>
+
+                <aside class="card study-tools">
+                    <div class="retro-clock-shell">
+                        <div class="mini-title">Live clock</div>
+                        <div class="retro-clock">
+                            <div class="countdown retro-digits" id="liveClock">00:00:00</div>
+                            <div class="clockline" id="liveDate">Loading date...</div>
+                        </div>
+                    </div>
+
+                    <div class="retro-clock-shell">
+                        <div class="mini-title">Study alarm timer</div>
+                        <div class="retro-clock timer-box">
+                            <div class="countdown retro-digits" id="timerDisplay">25:00</div>
+                            <div class="clockline" id="timerStatus">Choose a session and start studying.</div>
+                        </div>
+                    </div>
+
+                    <div class="timer-presets">
+                        <button class="btn secondary preset-btn" data-minutes="25" type="button">25 min</button>
+                        <button class="btn secondary preset-btn" data-minutes="45" type="button">45 min</button>
+                        <button class="btn secondary preset-btn" data-minutes="60" type="button">60 min</button>
+                    </div>
+
+                    <div class="custom-timer-box">
+                        <label class="label">Set your own study time</label>
+                        <div class="custom-time-grid">
+                            <div>
+                                <label class="tiny-label" for="customHours">Hours</label>
+                                <input id="customHours" type="number" min="0" max="12" value="0" />
+                            </div>
+                            <div>
+                                <label class="tiny-label" for="customMinutes">Minutes</label>
+                                <input id="customMinutes" type="number" min="0" max="59" value="25" />
+                            </div>
+                        </div>
+                        <button class="btn primary full-btn" id="setCustomTimer" type="button">Set Time</button>
+                    </div>
+
+                    <div class="btn-row">
+                        <button class="btn primary" id="startTimer" type="button">Start</button>
+                        <button class="btn success" id="pauseTimer" type="button">Pause</button>
+                        <button class="btn warn" id="resetTimer" type="button">Reset</button>
+                    </div>
+                </aside>
+            </section>
+
+            <section class="main-grid">
+                <section class="card workspace">
+                    <div>
+                        <label class="label" for="fileInput">Upload study files</label>
+                        <input id="fileInput" type="file"
+                            accept=".pdf,.doc,.docx,.ppt,.pptx,.txt,.md,.png,.jpg,.jpeg,.gif,.webp,.mp4,.webm,.mp3,.wav,.csv,.json,.html" />
+                    </div>
+
+                    <div class="toolbar">
+                        <div class="toolbar-left file-meta" id="fileMeta">No file selected yet.</div>
+                        <div class="toolbar-right btn-row">
+                            <button class="btn secondary" id="fullscreenBtn" type="button">Study in Full Screen</button>
+                            <button class="btn secondary" id="downloadBtn" type="button">Download</button>
+                        </div>
+                    </div>
+
+                    <div class="viewer-wrap">
+                        <div class="fullscreen-timer" id="fullscreenTimerPanel" aria-hidden="true">
+                            <div class="fullscreen-timer-label">Study Timer</div>
+                            <div class="fullscreen-timer-value" id="fullscreenTimerDisplay">25:00</div>
+                        </div>
+
+                        <div class="viewer" id="viewer">
+                            <div class="placeholder">
+                                <h2>Ready for revision</h2>
+                                <p>
+                                    Upload a file to begin. PDFs work best for smooth browser study sessions.
+                                    Text files, images, audio, and video can also be previewed here.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <aside class="card notes-panel">
+                    <div>
+                        <label class="label" for="studyNotes">Quick notes</label>
+                        <textarea id="studyNotes"
+                            placeholder="Type your revision points, formulas, short answers, reminders, or chapter highlights here..."></textarea>
+                    </div>
+
+                    <div class="quick-points">
+                        <div class="point">
+                            <h3>Best study file</h3>
+                            <p>Use PDFs for your main material so you can study in fullscreen without browser issues.
+                            </p>
+                        </div>
+
+                        <div class="point">
+                            <h3>Good prep flow</h3>
+                            <ul>
+                                <li>Open one topic.</li>
+                                <li>Set your own study hours or minutes.</li>
+                                <li>Go fullscreen and keep the timer visible at the top right.</li>
+                                <li>Study in one focused session.</li>
+                            </ul>
+                        </div>
+
+                        <div class="point">
+                            <h3>Exam reminder</h3>
+                            <p>Convert PPT and Word files into PDFs before revision sessions for smoother reading.</p>
+                        </div>
+                    </div>
+                </aside>
+            </section>
+        </main>
+
+        <script>
+            const fileInput = document.getElementById('fileInput');
+            const viewer = document.getElementById('viewer');
+            const fileMeta = document.getElementById('fileMeta');
+            const fullscreenBtn = document.getElementById('fullscreenBtn');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const liveClock = document.getElementById('liveClock');
+            const liveDate = document.getElementById('liveDate');
+            const timerDisplay = document.getElementById('timerDisplay');
+            const fullscreenTimerDisplay = document.getElementById('fullscreenTimerDisplay');
+            const fullscreenTimerPanel = document.getElementById('fullscreenTimerPanel');
+            const timerStatus = document.getElementById('timerStatus');
+            const startTimerBtn = document.getElementById('startTimer');
+            const pauseTimerBtn = document.getElementById('pauseTimer');
+            const resetTimerBtn = document.getElementById('resetTimer');
+            const presetButtons = document.querySelectorAll('.preset-btn');
+            const customHours = document.getElementById('customHours');
+            const customMinutes = document.getElementById('customMinutes');
+            const setCustomTimerBtn = document.getElementById('setCustomTimer');
+
+            let currentFile = null;
+            let currentFileUrl = '';
+            let timerSeconds = 25 * 60;
+            let selectedPreset = 25 * 60;
+            let timerInterval = null;
+            let timerRunning = false;
+            let audioCtx = null;
+
+            function updateClock() {
+                const now = new Date();
+                liveClock.textContent = now.toLocaleTimeString([], { hour12: true });
+                liveDate.textContent = now.toLocaleDateString([], {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+            }
+
+            function formatTime(totalSeconds) {
+                const hrs = Math.floor(totalSeconds / 3600);
+                const mins = Math.floor((totalSeconds % 3600) / 60);
+                const secs = totalSeconds % 60;
+
+                if (hrs > 0) {
+                    return `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+                }
+                return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+            }
+
+            function renderTimer() {
+                const formatted = formatTime(timerSeconds);
+                timerDisplay.textContent = formatted;
+                fullscreenTimerDisplay.textContent = formatted;
+            }
+
+            function strikeMetallicTone(startTime, frequency, duration, gainValue = 0.12) {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                const filter = audioCtx.createBiquadFilter();
+
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(frequency, startTime);
+
+                filter.type = 'bandpass';
+                filter.frequency.setValueAtTime(frequency * 1.4, startTime);
+                filter.Q.setValueAtTime(10, startTime);
+
+                gain.gain.setValueAtTime(0.0001, startTime);
+                gain.gain.exponentialRampToValueAtTime(gainValue, startTime + 0.01);
+                gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+
+                osc.connect(filter);
+                filter.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.start(startTime);
+                osc.stop(startTime + duration);
+            }
+
+            function playAlarm() {
+                try {
+                    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+                    const now = audioCtx.currentTime;
+
+                    const chimePattern = [
+                        { t: 0.00, f: 1760, d: 1.4 },
+                        { t: 0.12, f: 2217, d: 1.2 },
+                        { t: 0.28, f: 2637, d: 1.0 },
+                        { t: 0.90, f: 1760, d: 1.4 },
+                        { t: 1.02, f: 2217, d: 1.2 },
+                        { t: 1.18, f: 2637, d: 1.0 }
+                    ];
+
+                    chimePattern.forEach(note => {
+                        strikeMetallicTone(now + note.t, note.f, note.d, 0.08);
+                    });
+                } catch (error) { }
+
+                alert('Study session complete. Take a short break.');
+            }
+
+            function startTimer() {
+                if (timerRunning || timerSeconds <= 0) return;
+                timerRunning = true;
+                timerStatus.textContent = 'Focus session running... stay with one topic.';
+
+                timerInterval = setInterval(() => {
+                    if (timerSeconds > 0) {
+                        timerSeconds -= 1;
+                        renderTimer();
+                    } else {
+                        clearInterval(timerInterval);
+                        timerRunning = false;
+                        timerStatus.textContent = 'Session complete.';
+                        renderTimer();
+                        playAlarm();
+                    }
+                }, 1000);
+            }
+
+            function pauseTimer() {
+                clearInterval(timerInterval);
+                timerRunning = false;
+                timerStatus.textContent = 'Timer paused.';
+            }
+
+            function resetTimer() {
+                clearInterval(timerInterval);
+                timerRunning = false;
+                timerSeconds = selectedPreset;
+                renderTimer();
+                timerStatus.textContent = 'Timer reset.';
+            }
+
+            function setCustomTimer() {
+                const hours = Number(customHours.value) || 0;
+                const minutes = Number(customMinutes.value) || 0;
+                const total = (hours * 3600) + (minutes * 60);
+
+                if (total <= 0) {
+                    timerStatus.textContent = 'Enter a valid custom study time.';
+                    return;
+                }
+
+                clearInterval(timerInterval);
+                timerRunning = false;
+                selectedPreset = total;
+                timerSeconds = total;
+                renderTimer();
+                timerStatus.textContent = `Custom timer set for ${hours} hour(s) and ${minutes} minute(s).`;
+            }
+
+            function clearViewer() {
+                viewer.innerHTML = '';
+            }
+
+            function setPlaceholder(title, message) {
+                clearViewer();
+                const box = document.createElement('div');
+                box.className = 'placeholder';
+                box.innerHTML = `<h2>${title}</h2><p>${message}</p>`;
+                viewer.appendChild(box);
+            }
+
+            function renderFile(file) {
+                if (!file) return;
+                currentFile = file;
+
+                if (currentFileUrl) URL.revokeObjectURL(currentFileUrl);
+                currentFileUrl = URL.createObjectURL(file);
+
+                const ext = file.name.split('.').pop().toLowerCase();
+                const mime = file.type;
+
+                fileMeta.textContent = `${file.name} • ${(file.size / 1024 / 1024).toFixed(2)} MB`;
+                clearViewer();
+
+                if (mime === 'application/pdf' || ext === 'pdf') {
+                    const frame = document.createElement('iframe');
+                    frame.src = currentFileUrl;
+                    frame.title = file.name;
+                    viewer.appendChild(frame);
+                    return;
+                }
+
+                if (mime.startsWith('image/')) {
+                    const img = document.createElement('img');
+                    img.src = currentFileUrl;
+                    img.alt = file.name;
+                    viewer.appendChild(img);
+                    return;
+                }
+
+                if (mime.startsWith('video/')) {
+                    const video = document.createElement('video');
+                    video.src = currentFileUrl;
+                    video.controls = true;
+                    viewer.appendChild(video);
+                    return;
+                }
+
+                if (mime.startsWith('audio/')) {
+                    const audio = document.createElement('audio');
+                    audio.src = currentFileUrl;
+                    audio.controls = true;
+                    audio.style.width = 'min(680px, 92%)';
+                    viewer.appendChild(audio);
+                    return;
+                }
+
+                if (mime.startsWith('text/') || ['txt', 'md', 'csv', 'json', 'html'].includes(ext)) {
+                    const frame = document.createElement('iframe');
+                    frame.src = currentFileUrl;
+                    frame.title = file.name;
+                    viewer.appendChild(frame);
+                    return;
+                }
+
+                if (['doc', 'docx', 'ppt', 'pptx'].includes(ext)) {
+                    setPlaceholder(
+                        'Convert for best results',
+                        'This file was uploaded, but Word and PowerPoint files do not preview reliably in local browser mode. Convert them to PDF and upload again.'
+                    );
+                    return;
+                }
+
+                setPlaceholder(
+                    'Preview not available',
+                    'This file type has been uploaded, but your browser cannot display it directly here. You can still download it.'
+                );
+            }
+
+            function downloadCurrentFile() {
+                if (!currentFile || !currentFileUrl) return;
+                const link = document.createElement('a');
+                link.href = currentFileUrl;
+                link.download = currentFile.name;
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+            }
+
+            fileInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                renderFile(file);
+            });
+
+            fullscreenBtn.addEventListener('click', async () => {
+                try {
+                    if (!document.fullscreenElement) {
+                        await document.documentElement.requestFullscreen();
+                        document.body.classList.add('fullscreen-mode');
+                        fullscreenTimerPanel.setAttribute('aria-hidden', 'false');
+                    } else {
+                        await document.exitFullscreen();
+                        document.body.classList.remove('fullscreen-mode');
+                        fullscreenTimerPanel.setAttribute('aria-hidden', 'true');
+                    }
+                } catch (err) {
+                    alert('Fullscreen could not be started in this browser.');
+                }
+            });
+
+            document.addEventListener('fullscreenchange', () => {
+                if (!document.fullscreenElement) {
+                    document.body.classList.remove('fullscreen-mode');
+                    fullscreenTimerPanel.setAttribute('aria-hidden', 'true');
+                } else {
+                    fullscreenTimerPanel.setAttribute('aria-hidden', 'false');
+                }
+            });
+
+            presetButtons.forEach((button) => {
+                button.addEventListener('click', () => {
+                    const minutes = Number(button.dataset.minutes);
+                    selectedPreset = minutes * 60;
+                    timerSeconds = selectedPreset;
+                    clearInterval(timerInterval);
+                    timerRunning = false;
+                    renderTimer();
+                    timerStatus.textContent = `${minutes}-minute session selected.`;
+                });
+            });
+
+            setCustomTimerBtn.addEventListener('click', setCustomTimer);
+            downloadBtn.addEventListener('click', downloadCurrentFile);
+            startTimerBtn.addEventListener('click', startTimer);
+            pauseTimerBtn.addEventListener('click', pauseTimer);
+            resetTimerBtn.addEventListener('click', resetTimer);
+
+            updateClock();
+            renderTimer();
+            setInterval(updateClock, 1000);
+        </script>
+    </body>
+
+</html>
